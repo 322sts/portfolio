@@ -35,5 +35,27 @@ export const loginSchema = z.object({
   password: z.string({ error: "errors.required" }).min(1, { error: "errors.required" }).max(128, { error: "auth.invalidCredentials" }),
 });
 
+/**
+ * Changement de mot de passe (page « Mon compte ») : l'ancien est exigé,
+ * le nouveau suit la règle d'inscription, doit être confirmé et différer de l'ancien.
+ */
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string({ error: "errors.required" })
+      .min(1, { error: "errors.required" })
+      .max(128, { error: "account.passwordWrongCurrent" }),
+    newPassword: newPasswordSchema,
+    confirmPassword: z.string({ error: "errors.required" }).min(1, { error: "errors.required" }),
+  })
+  .refine((d) => d.newPassword === d.confirmPassword, {
+    path: ["confirmPassword"],
+    error: "account.passwordMismatch",
+  })
+  .refine((d) => d.newPassword !== d.currentPassword, {
+    path: ["newPassword"],
+    error: "account.passwordSame",
+  });
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;

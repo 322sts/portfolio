@@ -229,7 +229,18 @@
     "deleteComment": "Supprimer",
     "logout": "Se déconnecter",
     "admin": "Administration",
-    "intro": "Vos favoris et vos commentaires sur les projets."
+    "intro": "Vos favoris et vos commentaires sur les projets.",
+    "passwordTitle": "Mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "passwordSubmit": "Changer le mot de passe",
+    "passwordSaving": "Enregistrement…",
+    "passwordChanged": "Mot de passe changé. Utilisez-le à votre prochaine connexion.",
+    "passwordWrongCurrent": "Le mot de passe actuel est incorrect.",
+    "passwordMismatch": "Les deux nouveaux mots de passe ne sont pas identiques.",
+    "passwordSame": "Le nouveau mot de passe doit être différent de l'actuel.",
+    "passwordNoLocal": "Ce compte se connecte avec GitHub : il n'a pas de mot de passe à changer ici."
   },
   "errors": {
     "notFoundTitle": "Page introuvable",

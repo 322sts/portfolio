@@ -229,7 +229,18 @@
     "deleteComment": "Delete",
     "logout": "Log out",
     "admin": "Administration",
-    "intro": "Your favourites and your comments on projects."
+    "intro": "Your favourites and your comments on projects.",
+    "passwordTitle": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordSubmit": "Change password",
+    "passwordSaving": "Saving…",
+    "passwordChanged": "Password changed. Use it next time you sign in.",
+    "passwordWrongCurrent": "The current password is incorrect.",
+    "passwordMismatch": "The two new passwords do not match.",
+    "passwordSame": "The new password must be different from the current one.",
+    "passwordNoLocal": "This account signs in with GitHub, so it has no password to change here."
   },
   "errors": {
     "notFoundTitle": "Page not found",

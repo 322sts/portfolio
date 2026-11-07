@@ -170,7 +170,8 @@ Ensuite, chaque `git push` sur `main` redéploie automatiquement le site.
 ## 6. Vérifier la mise en ligne
 
 1. Ouvre le site : accueil, `/projets`, une page projet, `/en`.
-2. Ouvre `/admin`. Tu dois être renvoyé vers la connexion. Connecte-toi avec `albangrelaud@proton.me` et le mot de passe choisi en 4.
+2. Ouvre `/admin`. Tu dois être renvoyé vers la connexion. Connecte-toi avec `albangrelaud@proton.me` et le mot de passe initial.
+   Va ensuite dans **Mon compte** (`/compte`) → **Mot de passe** pour choisir le tien, puis efface la ligne `ADMIN_INITIAL_PASSWORD` de ton `.env` local.
 3. Dans **Profil** : écris ta vraie bio (FR et EN), envoie ton CV en PDF et ta photo.
    La bio de départ répète le sous-titre de l'accueil ; remplace-la par 2 ou 3 phrases à toi.
 4. Envoie-toi un message depuis `/contact`. Il doit arriver dans `/admin/messages` et, si Resend est configuré, dans ta boîte Proton (regarde les spams la première fois).

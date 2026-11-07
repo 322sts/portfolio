@@ -13,6 +13,7 @@ import { EmptyState } from "@/components/empty-state/EmptyState";
 import { Button, buttonClassName } from "@/components/form";
 import { TitleBlock } from "@/components/title-block/TitleBlock";
 import styles from "../connexion/auth.module.css";
+import { PasswordForm } from "./password-form";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -129,6 +130,13 @@ export default async function AccountPage({ params }: Props) {
         ) : (
           <EmptyState title={t("noComments")} />
         )}
+      </section>
+
+      <section className={styles.section} aria-labelledby="mot-de-passe">
+        <h2 id="mot-de-passe" className={styles.sectionTitle}>
+          {t("passwordTitle")}
+        </h2>
+        <PasswordForm />
       </section>
 
       <div className={styles.actions}>

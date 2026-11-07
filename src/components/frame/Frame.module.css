@@ -1,0 +1,112 @@
+/* Cadre de page : sur mobile un simple filet, à partir de 720 px un double filet avec zones. */
+.frame {
+  --zone: 0px;
+  position: relative;
+  margin: var(--frame-inset);
+  min-height: calc(100dvh - 2 * var(--frame-inset));
+  border: var(--stroke) solid var(--ink);
+  padding: var(--zone);
+  display: flex;
+  flex-direction: column;
+}
+
+.inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.zonesTop,
+.zonesLeft,
+.zonesRight {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .frame {
+    --zone: 16px;
+  }
+
+  .inner {
+    border: 1px solid var(--ink);
+  }
+
+  .zonesTop,
+  .zonesLeft,
+  .zonesRight {
+    position: absolute;
+    display: flex;
+    font-family: var(--font-code);
+    font-size: 10px;
+    line-height: 1;
+    color: var(--muted);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .zonesTop {
+    top: 0;
+    left: var(--zone);
+    right: var(--zone);
+    height: var(--zone);
+  }
+
+  .zonesLeft,
+  .zonesRight {
+    top: var(--zone);
+    bottom: var(--zone);
+    width: var(--zone);
+    flex-direction: column;
+  }
+
+  .zonesLeft {
+    left: 0;
+  }
+
+  .zonesRight {
+    right: 0;
+  }
+
+  .zonesTop > span,
+  .zonesLeft > span,
+  .zonesRight > span {
+    flex: 1;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Traits de séparation des zones (ticks) */
+  .zonesTop > span + span {
+    border-left: 1px solid var(--ink);
+  }
+
+  .zonesLeft > span + span,
+  .zonesRight > span + span {
+    border-top: 1px solid var(--ink);
+  }
+}
+
+/* Coordonnées du curseur : dans la marge au-dessus du coin haut-droit. */
+.coords {
+  display: none;
+}
+
+@media (min-width: 1100px) and (hover: hover) and (pointer: fine) {
+  .coords {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    display: block;
+    padding-bottom: 4px;
+    font-family: var(--font-code);
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: pre;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    user-select: none;
+  }
+}

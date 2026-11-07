@@ -1,0 +1,292 @@
+/* Reset + base typographique. Les styles de composants vivent dans des CSS Modules. */
+@import "./tokens.css";
+
+/* --------------------------------------------------------------------------
+ * Reset
+ * ------------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border-radius: 0; /* SPEC §6 : aucun arrondi */
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: var(--space-20);
+  hanging-punctuation: first last;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-text);
+  font-variation-settings: "wdth" var(--wdth-text);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip; /* garde-fou : aucun débordement horizontal à 360 px */
+
+  /*
+   * Fond quadrillé cyanotype en CSS pur : trame fine 20 px + trame forte 100 px.
+   * Les dégradés ci-dessous ont des arrêts nets (1 px) : ce sont des traits, pas un dégradé décoratif.
+   */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px);
+  background-size:
+    var(--grid-step-major) var(--grid-step-major),
+    var(--grid-step-major) var(--grid-step-major),
+    var(--grid-step) var(--grid-step),
+    var(--grid-step) var(--grid-step);
+  background-position: -1px -1px;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  font-variation-settings: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Typographie
+ * ------------------------------------------------------------------------ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fw-black);
+  font-variation-settings: "wdth" var(--wdth-display);
+  line-height: var(--lh-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: var(--fs-40);
+}
+
+h2 {
+  font-size: var(--fs-28);
+}
+
+h3 {
+  font-size: var(--fs-22);
+  font-weight: var(--fw-bold);
+}
+
+h4 {
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+}
+
+p {
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+}
+
+small {
+  font-size: var(--fs-14);
+}
+
+strong,
+b {
+  font-weight: var(--fw-bold);
+}
+
+/* Liens : soulignés fins, épaissis au survol. */
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-thickness var(--dur-fast) var(--ease);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+::selection {
+  background: var(--mark);
+  color: var(--on-mark);
+}
+
+/* Focus visible : contour 2 px (--mark en sombre, sa variante foncée en clair pour garder 3:1). */
+:focus-visible {
+  outline: var(--stroke-bold) solid var(--focus);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Cible d'un renvoi (CrossRef) : surlignage bref. */
+:target {
+  scroll-margin-top: var(--space-20);
+}
+
+[data-xref]:target {
+  animation: xref-flash 1800ms var(--ease) 1;
+  outline: var(--stroke-bold) solid var(--focus);
+  outline-offset: 4px;
+}
+
+@keyframes xref-flash {
+  0%,
+  35% {
+    background-color: var(--mark);
+    color: var(--on-mark);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Utilitaires (peu nombreux, volontairement)
+ * ------------------------------------------------------------------------ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Métadonnées mono en capitales (cotes, cartouches, labels). */
+.mono-caps {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  font-size: 0.8em;
+  line-height: 1.5;
+  text-align: center;
+}
+
+mark {
+  background: var(--mark);
+  color: var(--on-mark);
+  padding: 0 0.15em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+ * Mouvement réduit : tout est coupé (SPEC §6).
+ * ------------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mode contraste forcé (Windows) : les traits redeviennent visibles. */
+@media (forced-colors: active) {
+  body {
+    background-image: none;
+  }
+
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Zone de page (layout [locale]) : entre l'en-tête et le pied, dans le cadre.
+ * Les pages posent <main id="contenu"> ; marges par défaut alignées sur la gouttière.
+ * ------------------------------------------------------------------------ */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page > main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-8) var(--gutter) var(--space-12);
+}

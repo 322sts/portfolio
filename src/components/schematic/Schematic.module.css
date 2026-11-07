@@ -1,0 +1,191 @@
+/* Schéma de planche : traits au token --ink, cotes au token --mark-ink (révélées). */
+.root {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.custom img {
+  width: 100%;
+  height: auto;
+}
+
+.main,
+.thin,
+.construct,
+.dash {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.main {
+  stroke-width: 1.6;
+}
+
+.thin {
+  stroke-width: 1;
+}
+
+.construct {
+  stroke: var(--muted);
+  stroke-width: 0.6;
+  stroke-opacity: 0.6;
+}
+
+.dash {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+.fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.label,
+.small,
+.formula,
+.highlight {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  stroke: none;
+}
+
+.label {
+  font-size: 11px;
+  fill: currentColor;
+}
+
+.small {
+  font-size: 9.5px;
+  fill: var(--muted);
+}
+
+.formula {
+  font-size: 14px;
+  fill: currentColor;
+  letter-spacing: 0.02em;
+}
+
+.highlight {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--mark-ink);
+}
+
+/* --- Cotes : invisibles tant que le parent ne pose pas --dim-opacity: 1 ---- */
+.dims {
+  color: var(--mark-ink);
+  opacity: var(--dim-opacity, 0);
+  transition: opacity var(--dur) var(--ease);
+}
+
+.showDims {
+  --dim-opacity: 1;
+}
+
+.dims .thin,
+.dims .construct,
+.dims .main {
+  stroke: currentColor;
+  stroke-opacity: 1;
+}
+
+.dims .small,
+.dims .label,
+.dims .highlight {
+  fill: currentColor;
+  font-weight: 700;
+}
+
+/* --- Tracé trait par trait (pathLength = 1) -------------------------------- */
+.animate .stage {
+  --stage-delay: 0ms;
+}
+
+.animate .stage[data-stage="1"] {
+  --stage-delay: 320ms;
+}
+
+.animate .stage[data-stage="2"] {
+  --stage-delay: 760ms;
+}
+
+.animate .stage[data-stage="3"] {
+  --stage-delay: 1100ms;
+}
+
+.animate .stage > .main,
+.animate .stage > .thin,
+.animate .stage > .construct {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw var(--dur-draw) var(--ease) forwards;
+  animation-delay: calc(var(--stage-delay) + var(--i, 0) * 40ms);
+}
+
+.animate .stage > .dash,
+.animate .stage > .fill,
+.animate .stage > text {
+  opacity: 0;
+  animation: appear var(--dur-slow) var(--ease) forwards;
+  animation-delay: calc(var(--stage-delay) + 500ms + var(--i, 0) * 30ms);
+}
+
+.stage > :nth-child(2) { --i: 1; }
+.stage > :nth-child(3) { --i: 2; }
+.stage > :nth-child(4) { --i: 3; }
+.stage > :nth-child(5) { --i: 4; }
+.stage > :nth-child(6) { --i: 5; }
+.stage > :nth-child(7) { --i: 6; }
+.stage > :nth-child(8) { --i: 7; }
+.stage > :nth-child(9) { --i: 8; }
+.stage > :nth-child(10) { --i: 9; }
+.stage > :nth-child(11) { --i: 10; }
+.stage > :nth-child(12) { --i: 11; }
+.stage > :nth-child(13) { --i: 12; }
+.stage > :nth-child(14) { --i: 13; }
+.stage > :nth-child(15) { --i: 14; }
+.stage > :nth-child(16) { --i: 15; }
+.stage > :nth-child(n + 17) { --i: 16; }
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate .stage > * {
+    animation: none !important;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  .animate .stage > .main,
+  .animate .stage > .thin,
+  .animate .stage > .construct {
+    stroke-dasharray: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+
+  .dims {
+    color: Highlight;
+  }
+}

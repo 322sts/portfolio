@@ -1,0 +1,296 @@
+/* En-tête : barre collée en haut du cadre, filet inférieur. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--bg);
+  border-bottom: 1px solid var(--ink);
+}
+
+.bar {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 56px;
+}
+
+/* --- Marque ------------------------------------------------------------ */
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-4);
+  border-right: 1px solid var(--ink);
+  text-decoration: none;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.brandName {
+  font-weight: var(--fw-black);
+  font-variation-settings: "wdth" var(--wdth-wide);
+  font-size: var(--fs-18);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brandSub {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.brand:hover .brandName {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+/* --- Bouton menu (mobile) ---------------------------------------------- */
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  border-left: 1px solid var(--ink);
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.menuButton[aria-expanded="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.barEnd {
+  display: flex;
+  align-items: stretch;
+  border-left: 1px solid var(--ink);
+}
+
+/* --- Panneau : menu déroulant sous 960 px ------------------------------- */
+.panel {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  border-top: 0;
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+}
+
+.panel:not([data-open="true"]) {
+  display: none;
+}
+
+.nav {
+  border-bottom: 1px solid var(--ink);
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+}
+
+.navList > li + li {
+  border-top: 1px solid var(--rule);
+}
+
+.navLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-height: var(--tap);
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  font-variation-settings: "wdth" var(--wdth-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.navNumber {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-weight: var(--fw-text);
+  font-size: var(--fs-12);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.navLink:hover .navLabel {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.navLink[aria-current="page"] {
+  background: var(--mark);
+  color: var(--on-mark);
+}
+
+.navLink[aria-current="page"] .navNumber {
+  color: var(--on-mark);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+/* --- Langue -------------------------------------------------------------- */
+.locale {
+  display: inline-flex;
+  min-height: 32px;
+  border: 1px solid var(--muted);
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+}
+
+.localeCurrent,
+.localeLink {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  padding: 0 var(--space-2);
+}
+
+.localeCurrent {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.localeLink {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.localeLink:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.account {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+@media (pointer: coarse) {
+  .locale,
+  .account {
+    min-height: var(--tap);
+  }
+
+  .localeCurrent,
+  .localeLink {
+    min-width: var(--tap);
+  }
+}
+
+/* --- Desktop : tout en ligne ------------------------------------------- */
+@media (min-width: 1200px) {
+  .menuButton {
+    display: none;
+  }
+
+  .brand {
+    margin-right: 0;
+  }
+
+  .panel,
+  .panel:not([data-open="true"]) {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    max-height: none;
+    overflow: visible;
+    background: none;
+  }
+
+  .nav {
+    border-bottom: 0;
+    margin-right: auto;
+  }
+
+  .navList {
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .navList > li {
+    display: flex;
+  }
+
+  .navList > li + li {
+    border-top: 0;
+  }
+
+  .navLink {
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-4);
+    border-right: 1px solid var(--rule);
+    font-size: var(--fs-14);
+  }
+
+  .tools {
+    flex-wrap: nowrap;
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+  }
+}
+
+@media (min-width: 1200px) {
+  .navLink {
+    white-space: nowrap;
+    padding: 0 var(--space-3);
+  }
+}
+
+@media (min-width: 1440px) {
+  .navLink {
+    padding: 0 var(--space-5);
+  }
+}
+
+.logoutForm {
+  display: contents;
+}
+
+button.account {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+button.account:hover {
+  color: var(--ink);
+}

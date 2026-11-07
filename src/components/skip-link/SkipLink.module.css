@@ -1,0 +1,23 @@
+.skip {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: calc(var(--z-palette) + 1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--mark);
+  color: var(--on-mark);
+  font-family: var(--font-code);
+  font-size: var(--fs-14);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  text-decoration: none;
+  border: var(--stroke-bold) solid var(--on-mark);
+  transform: translateY(calc(-100% - var(--space-4)));
+}
+
+.skip:focus,
+.skip:focus-visible {
+  transform: none;
+  outline: var(--stroke-bold) solid var(--focus);
+  outline-offset: 2px;
+}

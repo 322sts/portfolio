@@ -1,0 +1,160 @@
+.wrap {
+  min-width: 0;
+}
+
+.hint {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  color: var(--muted);
+}
+
+/* Défilement horizontal propre : le tableau garde sa largeur, la région défile. */
+.scroller {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  border-top: var(--stroke-bold) solid var(--ink);
+  border-bottom: var(--stroke-bold) solid var(--ink);
+  background: var(--bg);
+}
+
+.scroller:focus-visible {
+  outline-offset: 2px;
+}
+
+.table {
+  width: 100%;
+  min-width: 760px;
+  font-size: var(--fs-14);
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--rule);
+}
+
+.table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.table thead th {
+  padding: 0;
+  border-bottom: 1px solid var(--ink);
+  white-space: nowrap;
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+}
+
+.sortButton:hover,
+th[aria-sort="ascending"] .sortButton,
+th[aria-sort="descending"] .sortButton {
+  color: var(--ink);
+}
+
+.sortButton:focus-visible {
+  outline-offset: -3px;
+}
+
+.sortIdle {
+  opacity: 0.5;
+}
+
+.sortActive {
+  color: var(--mark-ink);
+}
+
+.table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.table tbody tr:focus-within {
+  background: var(--mark);
+  color: var(--on-mark);
+}
+
+.table tbody tr:focus-within .rowLink {
+  outline: none;
+}
+
+.table tbody tr:focus-within .no {
+  color: inherit;
+}
+
+.num,
+.mono {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  white-space: nowrap;
+}
+
+.num {
+  font-weight: 700;
+}
+
+.title {
+  font-weight: 700;
+  font-variation-settings: "wdth" var(--wdth-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.rowLink {
+  display: inline-block;
+  padding: var(--space-1) 0;
+  text-decoration: none;
+}
+
+.rowLink:hover {
+  text-decoration: underline;
+}
+
+.stack {
+  font-size: var(--fs-12);
+  font-family: var(--font-code);
+}
+
+.ai {
+  padding: 0 var(--space-1);
+  background: var(--mark);
+  color: var(--on-mark);
+  font-weight: 700;
+}
+
+.no {
+  color: var(--muted);
+}
+
+@media (pointer: coarse) {
+  .rowLink {
+    min-height: var(--tap);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .sortButton {
+    min-height: var(--tap);
+  }
+}

@@ -1,0 +1,214 @@
+/*
+ * Jetons de design — SPEC §6 (« Plan d'ingénieur »).
+ * Thème clair = calque, thème sombre = cyanotype.
+ * Priorité : data-theme sur <html> (cookie lu côté serveur) > prefers-color-scheme.
+ * Aucune valeur de couleur ne doit être écrite en dur ailleurs que dans ce fichier.
+ */
+
+/* --------------------------------------------------------------------------
+ * Jetons indépendants du thème
+ * ------------------------------------------------------------------------ */
+:root {
+  /* Familles (variables posées par next/font dans src/styles/fonts.ts) */
+  --font-sans: var(--font-display), "Archivo", system-ui, sans-serif;
+  --font-code: var(--font-mono), ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* Échelle typographique SPEC : 12 / 14 / 16 / 18 / 22 / 28 / 40 / clamp(44, 8vw, 104) */
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-22: 1.375rem;
+  --fs-28: 1.75rem;
+  --fs-40: 2.5rem;
+  --fs-hero: clamp(2.75rem, 8vw, 6.5rem);
+
+  /* Axe de largeur d'Archivo (wdth 62–125) */
+  --wdth-wide: 125; /* titres héros */
+  --wdth-display: 115; /* titres */
+  --wdth-text: 84; /* texte courant */
+  --wdth-narrow: 75; /* légendes serrées */
+
+  --fw-text: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  --lh-tight: 1;
+  --lh-heading: 1.12;
+  --lh-snug: 1.35;
+  --lh-body: 1.6;
+  --tracking-caps: 0.06em; /* capitales mono (cartouches, labels) */
+  --measure: 68ch;
+
+  /* Espacements (base 4 px ; la trame du fond est de 20 / 100 px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-25: 100px;
+  --gutter: 16px; /* gouttière latérale mobile */
+  --grid-step: 20px;
+  --grid-step-major: 100px;
+
+  /* Épaisseurs de trait */
+  --stroke-hair: 1px; /* trame, traits de construction */
+  --stroke: 1.5px; /* contours de schémas */
+  --stroke-bold: 2px; /* cadre, focus, soulignés actifs */
+  --stroke-heavy: 3px; /* filets de cartouche */
+
+  /* Durées / courbes (toutes neutralisées sous prefers-reduced-motion) */
+  --dur-instant: 80ms;
+  --dur-fast: 140ms;
+  --dur: 220ms;
+  --dur-slow: 420ms;
+  --dur-draw: 1100ms; /* tracé trait par trait des schémas */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.3, 1);
+
+  /* Calques */
+  --z-header: 20;
+  --z-menu: 40;
+  --z-palette: 60;
+
+  /* Ergonomie */
+  --tap: 44px; /* cible tactile minimale */
+  --frame-inset: 8px; /* marge entre le bord de l'écran et le cadre */
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 24px;
+    --frame-inset: 16px;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --gutter: 40px;
+    --frame-inset: 24px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Couleurs — Calque (clair), valeurs par défaut
+ * ------------------------------------------------------------------------ */
+:root,
+:root[data-theme="light"],
+[data-surface="light"] {
+  color-scheme: light;
+  --bg: #f7f9fc;
+  --grid: #dce5f3;
+  --grid-major: #c3d2ea;
+  --ink: #14306b;
+  --muted: #4a5a7a;
+  --mark: #f5de6b; /* fond surligneur */
+  --mark-ink: #6b5200; /* texte « surligné » sans fond */
+  --on-mark: #14306b; /* texte posé sur --mark */
+  --danger: #b3261e;
+  --ok: #1e7a46;
+  --sheet-bg: #f7f9fc;
+  --sheet-ink: #14306b;
+  --surface: #ffffff; /* champs, panneaux posés sur le plan */
+  --surface-2: #eef2f9; /* lignes alternées, survol */
+  --rule: #9fb2d3; /* filets non porteurs d'information */
+  --focus: #6b5200; /* contour de focus (≥ 3:1 sur le fond clair) */
+  --backdrop: rgb(20 48 107 / 0.55); /* fond opaque uni derrière la palette */
+  --shiki-mode: light;
+}
+
+/* --------------------------------------------------------------------------
+ * Couleurs — Cyanotype (sombre)
+ * ------------------------------------------------------------------------ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1e3f86;
+  --grid: #2d51a0;
+  --grid-major: #3a62b5;
+  --ink: #f2f5fa;
+  --muted: #a4c8f2;
+  --mark: #f2d04b;
+  --mark-ink: #f2d04b;
+  --on-mark: #14306b;
+  --danger: #ff9a8f;
+  --ok: #8ee6b4;
+  --sheet-bg: #f7f9fc;
+  --sheet-ink: #14306b;
+  --surface: #183573;
+  --surface-2: #234894;
+  --rule: #5a7fc6;
+  --focus: #f2d04b;
+  --backdrop: rgb(10 26 60 / 0.72);
+  --shiki-mode: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1e3f86;
+    --grid: #2d51a0;
+    --grid-major: #3a62b5;
+    --ink: #f2f5fa;
+    --muted: #a4c8f2;
+    --mark: #f2d04b;
+    --mark-ink: #f2d04b;
+    --on-mark: #14306b;
+    --danger: #ff9a8f;
+    --ok: #8ee6b4;
+    --sheet-bg: #f7f9fc;
+    --sheet-ink: #14306b;
+    --surface: #183573;
+    --surface-2: #234894;
+    --rule: #5a7fc6;
+    --focus: #f2d04b;
+    --backdrop: rgb(10 26 60 / 0.72);
+    --shiki-mode: dark;
+  }
+}
+
+/*
+ * [data-surface="light"] (déclaré avec le thème clair) re-déclare la palette calque
+ * sur un sous-arbre : c'est la « feuille de calque » posée sur le bleu (Sheet).
+ * Une propriété déclarée sur l'élément l'emporte toujours sur la valeur héritée de
+ * <html>, donc cela fonctionne quel que soit le thème.
+ */
+
+/* Surface cyanotype forcée sur un sous-arbre (comparaison des thèmes sur /design). */
+[data-surface="dark"] {
+  color-scheme: dark;
+  --bg: #1e3f86;
+  --grid: #2d51a0;
+  --grid-major: #3a62b5;
+  --ink: #f2f5fa;
+  --muted: #a4c8f2;
+  --mark: #f2d04b;
+  --mark-ink: #f2d04b;
+  --on-mark: #14306b;
+  --danger: #ff9a8f;
+  --ok: #8ee6b4;
+  --surface: #183573;
+  --surface-2: #234894;
+  --rule: #5a7fc6;
+  --focus: #f2d04b;
+  --shiki-mode: dark;
+}
+
+/*
+ * Couleurs des tracés (PlotterChart). La DA n'offre que deux teintes non réservées (encre, jaune) :
+ * l'identité des séries est portée d'abord par le MOTIF de plume (plein, tirets, pointillés, mixte),
+ * la légende et le tableau de données. --ok / --danger restent réservés aux états.
+ */
+:root,
+[data-surface] {
+  --plot-1: var(--ink);
+  --plot-2: var(--mark-ink);
+  --plot-3: var(--muted);
+  --plot-4: var(--ink);
+}

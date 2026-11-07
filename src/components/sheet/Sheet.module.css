@@ -1,0 +1,109 @@
+/*
+ * La feuille porte data-surface="light" : à l'intérieur, --bg/--ink/--mark… valent la palette calque.
+ * Fond légèrement quadrillé (trame 20 px très claire), comme un calque millimétré.
+ */
+.sheet {
+  position: relative;
+  min-width: 0;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px);
+  background-size: var(--grid-step) var(--grid-step);
+  border: 1px solid var(--ink);
+  padding: var(--space-8) var(--gutter) var(--space-10);
+}
+
+@media (min-width: 720px) {
+  .sheet {
+    padding: var(--space-12) var(--space-10) var(--space-16);
+  }
+}
+
+/* Repères d'angle (équerres) aux quatre coins. */
+.corners::before,
+.corners::after,
+.sheet::before,
+.sheet::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--ink);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.sheet::before {
+  top: 6px;
+  left: 6px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.sheet::after {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.corners::before {
+  top: 6px;
+  right: 6px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.corners::after {
+  bottom: 6px;
+  left: 6px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.stamp {
+  position: absolute;
+  top: 8px;
+  right: 28px;
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.content {
+  position: relative;
+  min-width: 0;
+}
+
+@media (min-width: 1100px) {
+  .withMargin .content {
+    padding-right: calc(15rem + var(--space-8));
+  }
+}
+
+/* Thème clair : la feuille EST la page — ni cadre, ni trame propre. */
+:root[data-theme="light"] .sheet {
+  border-color: transparent;
+  background-image: none;
+  background-color: transparent;
+}
+
+:root[data-theme="light"] .sheet::before,
+:root[data-theme="light"] .sheet::after,
+:root[data-theme="light"] .corners {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .sheet {
+    border-color: transparent;
+    background-image: none;
+    background-color: transparent;
+  }
+
+  :root:not([data-theme="dark"]) .sheet::before,
+  :root:not([data-theme="dark"]) .sheet::after,
+  :root:not([data-theme="dark"]) .corners {
+    display: none;
+  }
+}

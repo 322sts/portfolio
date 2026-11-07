@@ -1,0 +1,60 @@
+/* Bloc « graphique » du Markdown (agent 4). Jetons de tokens.css uniquement. */
+
+.figure {
+  margin: var(--space-8) 0;
+  min-width: 0;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  align-items: baseline;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+}
+
+.axes {
+  color: var(--muted);
+}
+
+.error {
+  margin: var(--space-8) 0;
+  padding: var(--space-4);
+  border: var(--stroke-bold) dashed var(--danger);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.errorTitle {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--danger);
+  font-weight: var(--fw-bold);
+}
+
+.errorText {
+  margin-top: var(--space-2);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-14);
+  overflow-wrap: anywhere;
+}
+
+.errorHelp {
+  margin-top: var(--space-2);
+  font-size: var(--fs-14);
+  color: var(--muted);
+}

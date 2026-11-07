@@ -1,0 +1,38 @@
+/* Liste des projets (agent 4) — feuille 02. */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-content: start;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.head :global(.mono-caps) {
+  color: var(--muted);
+}
+
+.intro {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.controls {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.view {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.results {
+  min-width: 0;
+}

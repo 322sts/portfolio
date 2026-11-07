@@ -1,0 +1,8 @@
+/* Champ piège : hors écran, ignoré par les lecteurs d'écran et le clavier. */
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

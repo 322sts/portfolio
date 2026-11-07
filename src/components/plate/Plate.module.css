@@ -1,0 +1,164 @@
+.plate {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  border: 1px solid var(--ink);
+  background: var(--bg);
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+/* --- En-tête : PL. nn · TECHNO · SOLO/ÉQUIPE ---------------------------- */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 32px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.head > span {
+  padding: 6px var(--space-3);
+}
+
+.head > span + span {
+  border-left: 1px solid currentColor;
+}
+
+.num {
+  font-weight: 700;
+}
+
+.more {
+  color: var(--muted);
+}
+
+/* --- Schéma ----------------------------------------------------------- */
+.figure {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--ink);
+}
+
+/* Le schéma garde ses proportions mais ne dépasse pas une hauteur lisible. */
+.figure svg {
+  max-height: 280px;
+}
+
+.ref {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-1);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: var(--tracking-caps);
+  color: var(--muted);
+}
+
+/* --- Pied --------------------------------------------------------------- */
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3) var(--space-4);
+}
+
+.title {
+  font-size: var(--fs-22);
+  line-height: var(--lh-heading);
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* Lien étiré : toute la planche est la cible. */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.summary {
+  max-width: 60ch;
+  font-size: var(--fs-14);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- États : survol / focus révèlent les cotes ------------------------- */
+.plate:hover,
+.plate:focus-within {
+  --dim-opacity: 1;
+}
+
+.plate:hover .head,
+.plate:focus-within .head {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.plate:hover .head .more,
+.plate:focus-within .head .more {
+  color: inherit;
+}
+
+.plate:hover .title,
+.plate:focus-within .title {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.plate:has(.link:focus-visible) {
+  outline: var(--stroke-bold) solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* --- Grande planche --------------------------------------------------- */
+.plate[data-size="feature"] .title {
+  font-size: var(--fs-28);
+}
+
+@media (min-width: 720px) {
+  .plate[data-size="feature"] .title {
+    font-size: var(--fs-40);
+    font-variation-settings: "wdth" var(--wdth-wide);
+  }
+
+  .plate[data-size="feature"] .summary {
+    font-size: var(--fs-16);
+  }
+
+  .plate[data-size="feature"] .figure {
+    padding: var(--space-8) var(--space-6);
+  }
+}

@@ -1,0 +1,57 @@
+/* À propos (agent 4) — feuille 03. */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-content: start;
+  max-width: 64rem;
+  width: 100%;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.head :global(.mono-caps) {
+  color: var(--muted);
+}
+
+.name {
+  font-weight: var(--fw-bold);
+  font-variation-settings: "wdth" var(--wdth-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.withPhoto {
+  display: grid;
+  gap: var(--space-8);
+}
+
+@media (min-width: 900px) {
+  .withPhoto {
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.photo {
+  position: relative;
+  width: min(240px, 60vw);
+  aspect-ratio: 4 / 5;
+  border: var(--stroke-hair) solid var(--ink);
+  background: var(--surface);
+}
+
+.photoImg {
+  object-fit: cover;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}

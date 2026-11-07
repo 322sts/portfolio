@@ -1,0 +1,99 @@
+/* Contact (agent 4) — feuille 04. */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-content: start;
+  max-width: 72rem;
+  width: 100%;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.head :global(.mono-caps) {
+  color: var(--muted);
+}
+
+.intro {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.layout {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+.panel,
+.details {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.panelTitle {
+  font-size: var(--fs-18);
+  border-bottom: var(--stroke-hair) solid var(--ink);
+  padding-bottom: var(--space-2);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 40rem;
+}
+
+.dl {
+  display: grid;
+  border-top: var(--stroke-hair) solid var(--ink);
+}
+
+.dl > div {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) 0;
+  border-bottom: var(--stroke-hair) solid var(--rule);
+}
+
+.dl dt {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dl dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.email {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-18);
+  overflow-wrap: anywhere;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-14);
+  overflow-wrap: anywhere;
+}

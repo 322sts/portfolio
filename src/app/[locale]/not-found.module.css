@@ -1,0 +1,65 @@
+/* 404 (agent 4) : case vide barrée, comme une feuille manquante du jeu de plans. */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-12);
+  align-content: start;
+}
+
+.sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+  max-width: 64rem;
+}
+
+@media (min-width: 900px) {
+  .sheet {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+.cross {
+  width: 100%;
+  max-width: 28rem;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+
+.axis {
+  stroke: var(--mark-ink);
+  stroke-dasharray: 6 4;
+  stroke-width: 1;
+}
+
+.text {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.text :global(.mono-caps) {
+  color: var(--mark-ink);
+}
+
+.lede {
+  color: var(--muted);
+  max-width: var(--measure);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+/* « INTROUVABLE » est un mot long : la taille suit la largeur pour tenir à 360 px. */
+.title {
+  font-size: clamp(1.75rem, 7.5vw, 4rem);
+  font-variation-settings: "wdth" var(--wdth-wide);
+  line-height: 1;
+}

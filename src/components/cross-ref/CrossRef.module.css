@@ -1,0 +1,19 @@
+.ref {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: 0.85em;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  white-space: nowrap;
+}
+
+.ref::before {
+  content: "→ ";
+  color: var(--muted);
+}
+
+.ref:hover {
+  background: var(--mark);
+  color: var(--on-mark);
+  text-decoration-style: solid;
+}

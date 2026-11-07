@@ -1,0 +1,275 @@
+// Schéma Prisma du portfolio — source : SPEC.md §4.
+// Client généré dans src/generated/prisma (générateur "prisma-client" de Prisma 7).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  VISITOR
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum TeamType {
+  SOLO
+  TEAM
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Locale {
+  fr
+  en
+}
+
+// ---------------------------------------------------------------------------
+// Utilisateurs et Auth.js
+// ---------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  name          String?
+  image         String?
+  role          Role      @default(VISITOR)
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts  Account[]
+  sessions  Session[]
+  favorites Favorite[]
+  comments  Comment[]
+}
+
+// Modèle standard @auth/prisma-adapter (comptes OAuth).
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+// Requis par le typage de l'adapter ; inutilisé en stratégie JWT.
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Requis par l'adapter (vérification email / magic link éventuels).
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ---------------------------------------------------------------------------
+// Projets
+// ---------------------------------------------------------------------------
+
+model Project {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  status        ProjectStatus @default(DRAFT)
+  /// Toujours le 1er du mois (précision au mois).
+  date          DateTime
+  teamType      TeamType
+  aiAssisted    Boolean       @default(false)
+  coverImageUrl String?
+  /// SVG sanitisé (DOMPurify, profil SVG) avant enregistrement.
+  plateSvg      String?
+  githubUrl     String?
+  demoUrl       String?
+  pdfUrl        String?
+  featured      Boolean       @default(false)
+  sortOrder     Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  translations ProjectTranslation[]
+  categories   ProjectCategory[]
+  technologies ProjectTechnology[]
+  media        ProjectMedia[]
+  favorites    Favorite[]
+  comments     Comment[]
+
+  @@index([status, date])
+}
+
+model ProjectTranslation {
+  id         String  @id @default(cuid())
+  projectId  String
+  locale     Locale
+  title      String
+  summary    String
+  objectives String?
+  /// Markdown (sanitisé au rendu).
+  body       String
+  results    String?
+  aiMethod   String?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, locale])
+}
+
+model Category {
+  id             String @id @default(cuid())
+  slug           String @unique
+  /// finance | maths | info | ia | generic
+  schematicStyle String @default("generic")
+  sortOrder      Int    @default(0)
+
+  translations CategoryTranslation[]
+  projects     ProjectCategory[]
+}
+
+model CategoryTranslation {
+  id         String @id @default(cuid())
+  categoryId String
+  locale     Locale
+  name       String
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+}
+
+model Technology {
+  id   String @id @default(cuid())
+  slug String @unique
+  name String
+
+  projects ProjectTechnology[]
+}
+
+model ProjectCategory {
+  projectId  String
+  categoryId String
+
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, categoryId])
+}
+
+model ProjectTechnology {
+  projectId    String
+  technologyId String
+
+  project    Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, technologyId])
+}
+
+model ProjectMedia {
+  id        String  @id @default(cuid())
+  projectId String
+  url       String
+  altFr     String
+  altEn     String
+  captionFr String?
+  captionEn String?
+  sortOrder Int     @default(0)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Interactions visiteurs
+// ---------------------------------------------------------------------------
+
+model Favorite {
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([userId, projectId])
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  projectId String
+  userId    String
+  /// Texte brut, 2000 caractères max (validé par Zod).
+  body      String        @db.VarChar(2000)
+  status    CommentStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, status])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  /// Email ou IP (préfixer, ex. "email:..." / "ip:...").
+  key       String
+  success   Boolean
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
+
+// Ligne unique (id = 1).
+model SiteProfile {
+  id          Int      @id @default(1)
+  bioFr       String
+  bioEn       String
+  cvUrl       String?
+  photoUrl    String?
+  githubUrl   String
+  linkedinUrl String
+  email       String
+  updatedAt   DateTime @updatedAt
+}

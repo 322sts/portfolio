@@ -1,0 +1,38 @@
+.switch {
+  display: inline-flex;
+  border: 1px solid var(--ink);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--bg);
+}
+
+.option + .option {
+  border-left: 1px solid var(--ink);
+}
+
+.option:hover {
+  text-decoration: underline;
+}
+
+.option[aria-current="page"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+@media (pointer: coarse) {
+  .option {
+    min-height: var(--tap);
+  }
+}

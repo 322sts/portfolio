@@ -1,0 +1,271 @@
+/* ---------------------------------------------------------------------------
+ * Boutons
+ * ------------------------------------------------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  padding: 0 var(--space-5);
+  border: 1px solid var(--ink);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-14);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.btnSm {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--fs-12);
+}
+
+@media (pointer: coarse) {
+  .btnSm {
+    min-height: var(--tap);
+  }
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-danger {
+  background: var(--bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: var(--bg);
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Indicateur d'activité : petit carré qui tourne (pas d'arrondi). */
+.spinner {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Champs
+ * ------------------------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.label {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.required {
+  color: var(--mark-ink);
+}
+
+.control {
+  display: block;
+  width: 100%;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--muted);
+  border-bottom: var(--stroke-bold) solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--fs-16); /* 16 px : pas de zoom auto sur iOS */
+  line-height: 1.4;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.control::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.control:hover {
+  border-color: var(--ink);
+}
+
+.control:focus-visible {
+  outline-offset: 0;
+}
+
+.control[aria-invalid="true"] {
+  border-color: var(--danger);
+  border-bottom-color: var(--danger);
+}
+
+.control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: var(--lh-body);
+}
+
+.mono {
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-14);
+}
+
+.selectWrap {
+  position: relative;
+  display: block;
+}
+
+.select {
+  appearance: none;
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+.chevron {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.hint {
+  font-size: var(--fs-14);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--fs-14);
+  line-height: 1.45;
+  color: var(--danger);
+}
+
+.error svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Case à cocher
+ * ------------------------------------------------------------------------- */
+.checkField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.checkLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap);
+  cursor: pointer;
+  font-size: var(--fs-16);
+}
+
+.checkbox {
+  appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.checkbox::before {
+  content: "";
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--bg);
+  border-bottom: 2px solid var(--bg);
+  transform: translateY(-1px) rotate(-45deg) scale(0);
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.checkbox:checked {
+  background: var(--ink);
+}
+
+.checkbox:checked::before {
+  transform: translateY(-1px) rotate(-45deg) scale(1);
+}
+
+.checkbox[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+@media (forced-colors: active) {
+  .checkbox:checked {
+    background: Highlight;
+  }
+}

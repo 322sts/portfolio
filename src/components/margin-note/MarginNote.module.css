@@ -1,0 +1,47 @@
+.note {
+  margin: var(--space-4) 0;
+  padding: var(--space-2) 0 var(--space-2) var(--space-3);
+  border-left: var(--stroke-bold) solid var(--mark);
+  font-size: var(--fs-14);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: var(--space-1);
+  padding: 0 var(--space-1);
+  background: var(--mark);
+  color: var(--on-mark);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.body > * + * {
+  margin-top: var(--space-2);
+}
+
+/* Grand écran : sort dans la marge réservée par <Sheet withMargin> (15rem). */
+@media (min-width: 1100px) {
+  .note {
+    float: right;
+    clear: right;
+    width: 15rem;
+    margin: 0 calc(-15rem - var(--space-8)) var(--space-4) 0;
+    position: relative;
+  }
+
+  /* Trait de rappel vers le texte. */
+  .note::before {
+    content: "";
+    position: absolute;
+    top: 0.85em;
+    right: 100%;
+    width: var(--space-6);
+    border-top: 1px dashed var(--mark-ink);
+  }
+}

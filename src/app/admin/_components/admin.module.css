@@ -1,0 +1,357 @@
+/* Styles des pages admin (mode « atelier ») — jetons de tokens.css uniquement. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1280px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--stroke-bold) solid var(--ink);
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.code {
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--fs-28);
+  font-weight: var(--fw-black);
+  font-variation-settings: "wdth" var(--wdth-wide);
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+  overflow-wrap: anywhere;
+}
+
+.lede {
+  margin: 0;
+  color: var(--muted);
+  max-width: 80ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--fs-14);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--space-2);
+}
+
+/* --- Indicateurs du tableau de bord ------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  text-decoration: none;
+  min-height: 92px;
+}
+
+a.stat:hover {
+  background: var(--surface-2);
+}
+
+.statValue {
+  font-family: var(--font-code);
+  font-size: var(--fs-40);
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.statAlert .statValue {
+  color: var(--mark-ink);
+}
+
+.columns {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1100px) {
+  .columns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- Listes compactes ---------------------------------------------------- */
+.list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+}
+
+.listItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.meta {
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.excerpt {
+  margin: 0;
+  width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+/* --- Tableaux ------------------------------------------------------------ */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--ink);
+}
+
+.table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+  font-size: var(--fs-14);
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table th {
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.table td.num {
+  font-family: var(--font-code);
+  white-space: nowrap;
+}
+
+.rowTitle {
+  font-weight: var(--fw-bold);
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* --- Filtres (onglets de statut) ---------------------------------------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--ink);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-right: 1px solid var(--ink);
+}
+
+.filter:last-child {
+  border-right: 0;
+}
+
+.filter[aria-current="page"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* --- Cartes / panneaux --------------------------------------------------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--ink);
+  background: var(--bg);
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.grid2 {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid3 {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 760px) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.inlineError {
+  margin: 0;
+  color: var(--danger);
+  font-size: var(--fs-14);
+}
+
+.confirm {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border: 1px dashed var(--danger);
+}
+
+.confirmText {
+  font-size: var(--fs-14);
+  color: var(--danger);
+}
+
+.messageBody {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  max-width: 80ch;
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+}
+
+.dl dt {
+  font-family: var(--font-code);
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dl dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.unread {
+  font-weight: var(--fw-bold);
+}
+
+.selectedRow {
+  background: var(--surface-2);
+}
+
+.previewPlate {
+  max-width: 560px;
+}
+
+.previewImg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

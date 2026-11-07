@@ -1,0 +1,39 @@
+.root {
+  display: inline-flex;
+  border: 1px solid var(--muted);
+}
+
+.option {
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.option + .option {
+  border-left: 1px solid var(--muted);
+}
+
+.option:hover {
+  color: var(--ink);
+}
+
+.option[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+
+@media (pointer: coarse) {
+  .option {
+    min-height: var(--tap);
+    min-width: var(--tap);
+  }
+}

@@ -1,0 +1,97 @@
+/* Flèches : triangles pleins dessinés par clip-path (pas d'image, couleur = currentColor). */
+.dim {
+  --arrow: 8px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  color: var(--ink);
+  border-left: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  min-height: 18px;
+}
+
+.dim[data-tone="mark"] {
+  color: var(--mark-ink);
+}
+
+.line {
+  flex: 1;
+  min-width: var(--space-2);
+  border-top: 1px solid currentColor;
+}
+
+.arrowStart,
+.arrowEnd {
+  flex: none;
+  width: var(--arrow);
+  height: 7px;
+  background: currentColor;
+}
+
+.arrowStart {
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+
+.arrowEnd {
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+
+.value {
+  flex: 0 1 auto;
+  min-width: 0;
+  text-align: center;
+  padding: 0 var(--space-2);
+  font-family: var(--font-code);
+  font-variation-settings: normal;
+  font-size: var(--fs-12);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Vertical ------------------------------------------------------------ */
+.dim[data-orientation="vertical"] {
+  flex-direction: column;
+  width: auto;
+  height: 100%;
+  min-height: 80px;
+  border: 0;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  padding: 0 var(--space-2);
+}
+
+.dim[data-orientation="vertical"] .line {
+  border-top: 0;
+  border-left: 1px solid currentColor;
+  min-height: var(--space-2);
+}
+
+.dim[data-orientation="vertical"] .arrowStart,
+.dim[data-orientation="vertical"] .arrowEnd {
+  width: 7px;
+  height: var(--arrow);
+}
+
+.dim[data-orientation="vertical"] .arrowStart {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.dim[data-orientation="vertical"] .arrowEnd {
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.dim[data-orientation="vertical"] .value {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  padding: var(--space-2) 0;
+}
+
+@media (forced-colors: active) {
+  .arrowStart,
+  .arrowEnd {
+    background: CanvasText;
+  }
+}

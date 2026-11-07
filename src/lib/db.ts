@@ -1,10 +1,19 @@
 import "server-only";
+import { Pool } from "pg";
+import { attachDatabasePool } from "@vercel/functions";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { env } from "@/lib/env";
 
 /**
- * Client Prisma singleton (Prisma 7 + driver adapter `pg`).
+ * Client Prisma singleton (Prisma 7 + driver adapter node-postgres).
+ *
+ * Production (Neon + Vercel) : on garde node-postgres, comme le recommande Neon
+ * pour Vercel (Fluid compute). `DATABASE_URL` est l'URL « pooled » de Neon
+ * (PgBouncer) ; `attachDatabasePool` laisse Vercel fermer proprement les
+ * connexions inactives avant de suspendre une fonction. Hors Vercel, l'appel
+ * n'a aucun effet.
+ *
  * En dev, le hot reload recrée les modules : on garde l'instance sur globalThis
  * pour ne pas ouvrir une nouvelle connexion à chaque rechargement.
  */
@@ -16,12 +25,15 @@ function createPrismaClient(): PrismaClient {
   // dès que la base est locale (dev OU `next start` en local). Neon n'est pas concerné.
   const host = new URL(env.DATABASE_URL).hostname;
   const isLocalDb = host === "localhost" || host === "127.0.0.1";
-  const adapter = new PrismaPg({
+
+  const pool = new Pool({
     connectionString: env.DATABASE_URL,
     ...(isLocalDb ? { max: 1 } : {}),
   });
+  if (!isLocalDb) attachDatabasePool(pool);
+
   return new PrismaClient({
-    adapter,
+    adapter: new PrismaPg(pool),
     log: env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
   });
 }

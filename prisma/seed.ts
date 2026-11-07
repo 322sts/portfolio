@@ -20,7 +20,8 @@ import {
   type Locale,
 } from "../src/generated/prisma/client";
 
-const databaseUrl = process.env.DATABASE_URL;
+// Tâche d'administration ponctuelle : URL directe de Neon si disponible.
+const databaseUrl = process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;
 if (!databaseUrl) {
   throw new Error("DATABASE_URL manquant (voir .env.example).");
 }

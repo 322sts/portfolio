@@ -81,12 +81,12 @@ git push -u origin main
 
 Ouvre un fichier texte temporaire (hors du projet) pour noter les valeurs. Tu les colleras dans Vercel à l'étape 4.
 
-### 3.1 Neon (base PostgreSQL), obligatoire
-1. https://neon.tech → inscription (connexion GitHub possible) → **Create project**, région **Europe (Frankfurt)**.
-2. Dans **Connection details**, récupère **deux** URL :
-   - l'URL **pooled** (le nom d'hôte contient `-pooler`) → ce sera `DATABASE_URL` sur Vercel ;
-   - l'URL **directe** (case « Pooled connection » décochée) → pour les migrations depuis ton PC.
-   Les deux finissent par `?sslmode=require`.
+### 3.1 Neon (base PostgreSQL) : déjà fait
+Le projet est relié à Neon par la CLI `neon` (`neon init` puis `neon deploy`, le 7 novembre 2026). Les tables sont créées et le contenu de départ est chargé. `neon deploy` a écrit deux URL dans `.env` :
+- `DATABASE_URL` : URL **pooled** (hôte en `-pooler`), utilisée par le site → à copier sur Vercel ;
+- `DATABASE_URL_UNPOOLED` : URL **directe**, utilisée uniquement par la CLI Prisma (migrations, seed, studio) via `prisma.config.ts`.
+
+Pour retrouver ces valeurs plus tard : `neon env pull`.
 
 ### 3.2 Secret d'authentification, obligatoire
 ```powershell
@@ -124,21 +124,14 @@ Sans Cloudinary, l'admin te propose de coller une URL d'image.
 
 ## 4. Préparer la base Neon depuis ton PC
 
-On crée les tables et ton compte admin **une fois**, depuis ton ordinateur, avec l'URL **directe** de Neon. Les variables tapées dans PowerShell passent avant celles du `.env`, sans le modifier.
+**Déjà fait le 7 novembre 2026** : `npx prisma migrate deploy` puis `npm run db:seed`. Les catégories, tes 3 projets et ton compte admin de production sont sur Neon.
 
+Comme `.env` contient `DATABASE_URL_UNPOOLED`, les commandes Prisma visent automatiquement Neon par la connexion directe. Quand le schéma de base change (nouvelle migration), il suffit de lancer :
 ```powershell
-cd "C:\Users\banba\Desktop\DEV\VIBE CODE\portfolio"
-$env:DATABASE_URL = "postgresql://...URL DIRECTE NEON...?sslmode=require"
-$env:ADMIN_INITIAL_PASSWORD = "un-mot-de-passe-long-et-unique"
 npx prisma migrate deploy
-npm run db:seed
-Remove-Item Env:DATABASE_URL, Env:ADMIN_INITIAL_PASSWORD
 ```
-- `migrate deploy` crée les tables (sans base fantôme, c'est la commande prévue pour la prod).
-- `db:seed` ajoute les catégories, tes 3 projets et ton compte admin avec **ce** mot de passe. Garde-le dans un gestionnaire de mots de passe : il n'y a pas encore de page « changer mon mot de passe ».
-- Les deux dernières lignes effacent les variables du terminal, pour ne pas viser Neon par erreur ensuite.
 
-À refaire uniquement quand le schéma de base change (nouvelle migration) : seulement `npx prisma migrate deploy`, avec l'URL directe.
+**Attention** : tant que `.env` contient les URL Neon, `npm run dev` travaille sur la base de **production**. Pour revenir à la base locale, remets les lignes `DATABASE_URL` / `SHADOW_DATABASE_URL` de `.env.backup-local` et supprime la ligne `DATABASE_URL_UNPOOLED`. Ou mieux : crée une branche Neon de dev avec `neon checkout dev --create`.
 
 ---
 

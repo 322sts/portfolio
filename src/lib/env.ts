@@ -20,7 +20,10 @@ const optionalEmail = z.preprocess(
 
 const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  // Neon : URL « pooled » (PgBouncer, hôte en -pooler) pour le trafic de l'application.
   DATABASE_URL: z.string().min(1, "DATABASE_URL est obligatoire"),
+  // Neon : URL directe, réservée aux migrations Prisma (lue par prisma.config.ts).
+  DATABASE_URL_UNPOOLED: optionalString,
   AUTH_SECRET: z.string().min(16, "AUTH_SECRET est obligatoire (npx auth secret)"),
   AUTH_GITHUB_ID: optionalString,
   AUTH_GITHUB_SECRET: optionalString,

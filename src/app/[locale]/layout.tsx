@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Omit<Props, "children">): Pro
     metadataBase: new URL(siteUrl),
     title: { default: t("defaultTitle"), template: `%s — ${t("siteName")}` },
     description: t("description"),
+    verification: { google: "HIcqexzEGEE5FcWGgiWQDtcxCWG0-TjbFdnf1hDnnZ0" },
   };
 }
 

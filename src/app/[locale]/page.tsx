@@ -10,6 +10,7 @@ import { TitleBlock } from "@/components/title-block/TitleBlock";
 import { Link } from "@/lib/i18n/navigation";
 import { getPublishedProjects } from "@/lib/queries/projects";
 import { getDomainCounts, getPublicProfile } from "@/lib/queries/site";
+import { PersonJsonLd } from "./_components/PersonJsonLd";
 import { asLocale, categoryCode, pageMetadata } from "./_lib/seo";
 import styles from "./home.module.css";
 
@@ -45,7 +46,11 @@ export default async function HomePage({ params }: Props) {
   const projects = await getPublishedProjects(locale);
   const domains = await getDomainCounts(locale);
   const profile = await getPublicProfile(locale);
-  const [t, tn] = await Promise.all([getTranslations("home"), getTranslations("nav")]);
+  const [t, tn, tm] = await Promise.all([
+    getTranslations("home"),
+    getTranslations("nav"),
+    getTranslations("metadata"),
+  ]);
 
   const latest = projects.slice(0, LATEST_COUNT);
   const years = projects.map((p) => p.date.getUTCFullYear());
@@ -62,6 +67,15 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <main id="contenu" className={styles.home}>
+      <PersonJsonLd
+        locale={locale}
+        jobTitle={t("subtitle")}
+        description={tm("description")}
+        websiteName={tm("defaultTitle")}
+        sameAs={[profile.linkedinUrl, profile.githubUrl]}
+        photoUrl={profile.photoUrl}
+        knowsAbout={domains.map((d) => d.name)}
+      />
       <section className={styles.masthead} aria-labelledby="titre-accueil">
         <p className={`mono-caps ${styles.kicker}`}>{t("sheetLabel")}</p>
         <div className={styles.nameBlock}>

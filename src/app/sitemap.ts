@@ -10,21 +10,29 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").re
 
 type Href = Parameters<typeof getPathname>[0]["href"];
 
-function entry(href: Href, lastModified?: Date): MetadataRoute.Sitemap[number] {
+/**
+ * Une entrée par langue (FR et EN), chacune listant toutes les versions
+ * (hreflang) + `x-default` vers le français, comme le recommande Google.
+ */
+function entries(href: Href, lastModified?: Date): MetadataRoute.Sitemap {
   const url = (locale: AppLocale) => siteUrl + getPathname({ locale, href });
-  return {
-    url: url(routing.defaultLocale),
-    lastModified,
-    alternates: {
-      languages: Object.fromEntries(routing.locales.map((l) => [l, url(l)])),
-    },
+  const languages: Record<string, string> = {
+    ...Object.fromEntries(routing.locales.map((l) => [l, url(l)])),
+    "x-default": url(routing.defaultLocale),
   };
+  return routing.locales.map((locale) => ({
+    url: url(locale),
+    lastModified,
+    alternates: { languages },
+  }));
 }
 
+// Pages indexables uniquement : connexion, inscription, compte et design sont
+// en `noindex`, les lister dans le sitemap enverrait des signaux contradictoires.
 const STATIC_PAGES: AppPathname[] = ["/", "/projets", "/a-propos", "/contact"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const pages = STATIC_PAGES.map((p) => entry(p as Href));
+  const pages = STATIC_PAGES.flatMap((p) => entries(p as Href));
 
   let projects: Array<{ slug: string; updatedAt: Date }> = [];
   try {
@@ -38,8 +46,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...pages,
-    ...projects.map((p) =>
-      entry({ pathname: "/projets/[slug]", params: { slug: p.slug } }, p.updatedAt),
+    ...projects.flatMap((p) =>
+      entries({ pathname: "/projets/[slug]", params: { slug: p.slug } }, p.updatedAt),
     ),
   ];
 }

@@ -16,13 +16,16 @@ type Props = {
   /** Intitulé (ex. « Élève-ingénieur à IMT Nord Europe »). */
   jobTitle: string;
   description: string;
+  /** Nom court du site (« Alban Grelaud ») : Google l'affiche comme nom du site. */
+  siteName: string;
+  /** Titre long (« Alban Grelaud — Portfolio »), donné en nom alternatif. */
   websiteName: string;
   sameAs: string[];
   photoUrl: string | null;
   knowsAbout: string[];
 };
 
-export function PersonJsonLd({ locale, jobTitle, description, websiteName, sameAs, photoUrl, knowsAbout }: Props) {
+export function PersonJsonLd({ locale, jobTitle, description, siteName, websiteName, sameAs, photoUrl, knowsAbout }: Props) {
   const homeUrl = siteUrl + getPathname({ locale, href: "/" });
   const personId = `${siteUrl}/#person`;
   const websiteId = `${siteUrl}/#website`;
@@ -34,7 +37,9 @@ export function PersonJsonLd({ locale, jobTitle, description, websiteName, sameA
         "@type": "WebSite",
         "@id": websiteId,
         url: `${siteUrl}/`,
-        name: websiteName,
+        // Nom de site affiché par Google (au lieu de « Vercel ») : court, sans slogan.
+        name: siteName,
+        alternateName: [websiteName, "A. Grelaud"],
         inLanguage: ["fr", "en"],
         publisher: { "@id": personId },
       },

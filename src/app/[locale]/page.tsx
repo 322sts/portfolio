@@ -71,6 +71,7 @@ export default async function HomePage({ params }: Props) {
         locale={locale}
         jobTitle={t("subtitle")}
         description={tm("description")}
+        siteName={tm("siteName")}
         websiteName={tm("defaultTitle")}
         sameAs={[profile.linkedinUrl, profile.githubUrl]}
         photoUrl={profile.photoUrl}
